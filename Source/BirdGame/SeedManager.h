@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Components/InstancedStaticMeshComponent.h"
+#include "Components/BoxComponent.h"
 #include "SeedManager.generated.h"
 
 UCLASS()
@@ -25,8 +26,14 @@ protected:
 	virtual void BeginPlay() override;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	FVector SpawnExtent;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	UInstancedStaticMeshComponent* SeedMesh;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TArray<FTransform> SeedTransforms;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	UBoxComponent* BoundsBox;
 };
