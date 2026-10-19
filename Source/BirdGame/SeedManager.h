@@ -8,6 +8,8 @@
 #include "Components/BoxComponent.h"
 #include "SeedManager.generated.h"
 
+class UMaterialInterface;
+
 UCLASS()
 class BIRDGAME_API ASeedManager : public AActor
 {
@@ -25,15 +27,15 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	FVector SpawnExtent;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UMaterialInterface* SeedMaterial;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	UInstancedStaticMeshComponent* SeedMesh;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	TArray<FTransform> SeedTransforms;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	UBoxComponent* BoundsBox;
 };

@@ -2,6 +2,7 @@
 
 
 #include "SeedManager.h"
+#include "Materials/MaterialInterface.h"
 
 // Sets default values
 ASeedManager::ASeedManager()
@@ -20,11 +21,13 @@ ASeedManager::ASeedManager()
 	BoundsBox->SetHiddenInGame(true);
 
 	SeedMesh = CreateDefaultSubobject<UInstancedStaticMeshComponent>(TEXT("SeedMesh"));
+	SeedMesh->NumCustomDataFloats = 8; // StartPos(3), TargetPos(3), SpawnTime(1), DurationTime(1)
 	SeedMesh->SetupAttachment(RootComponent);
-	SeedMesh->SetMobility(EComponentMobility::Movable);
+	SeedMesh->SetMobility(EComponentMobility::Movable); // maybe not needed
 
 	SeedMesh->SetCastShadow(false);
 	SeedMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	SeedMesh->SetBoundsScale(100.0f);
 
 	// TODO: Make this a UPROPERTY
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> SphereMeshAsset(TEXT("/Engine/BasicShapes/Sphere.Sphere"));
@@ -40,17 +43,26 @@ void ASeedManager::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	FTransform T;
+	if (SeedMaterial)
+	{
+		SeedMesh->SetMaterial(0, SeedMaterial);
+	}
 
-	T.SetLocation(FVector(0,0,0));
+	SeedMesh->SetCustomData(
+		SeedMesh->AddInstance(FTransform(FVector(0, 0, 0))),
+		TArray<float>({ 0,0,50, 0,0,-50, 10.0f, 5.0f }),
+		false);
 
-	SeedMesh->AddInstance(T);
+	SeedMesh->SetCustomData(
+		SeedMesh->AddInstance(FTransform(FVector(0, 0, 0))),
+		TArray<float>({ 0,0,50, 50,50,-50, 5.0f, 5.0f }),
+		true);
+
 }
 
 // Called every frame
 void ASeedManager::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 
