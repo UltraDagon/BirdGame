@@ -23,6 +23,8 @@ public:
 	// TODO: Should probably be turned off if no seeds are actively spawning, though it might not matter since seeds will be constantly spawning late game
 	virtual void Tick(float DeltaTime) override;
 
+	virtual void OnConstruction(const FTransform& Transform) override;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -38,4 +40,7 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	UBoxComponent* BoundsBox;
+
+private:
+	float TimeSinceLastSpawn;
 };
