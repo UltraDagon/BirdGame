@@ -68,9 +68,6 @@ void ASeedManager::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	const float Sx = SpawnExtent.X;
-	const float Sy = SpawnExtent.Y;
-	const float Sz = SpawnExtent.Z;
 	const float SpawnRate = 1.0f;
 
 	TimeSinceLastSpawn += DeltaTime;
@@ -78,6 +75,20 @@ void ASeedManager::Tick(float DeltaTime)
 	while (TimeSinceLastSpawn >= SpawnRate) {
 		TimeSinceLastSpawn -= SpawnRate;
 
+		ThrowSeeds(5);
+	}
+
+	//GEngine->AddOnScreenDebugMessage(0, 0.0f, FColor::Green, FString::Printf(TEXT("World Time: %.2f s"), GetWorld()->GetTimeSeconds()));
+}
+
+void ASeedManager::ThrowSeeds(const int& SeedCount)
+{
+	const float Sx = SpawnExtent.X;
+	const float Sy = SpawnExtent.Y;
+	const float Sz = SpawnExtent.Z;
+
+	//TODO: If needed, look into AddInstances() and PerInstanceRandom to boost performance.
+	for (int32 i = 0; i < SeedCount; i++) {
 		SeedMesh->SetCustomData(
 			SeedMesh->AddInstance(FTransform(FVector(0, 0, 0))),
 			TArray<float>({
@@ -86,10 +97,7 @@ void ASeedManager::Tick(float DeltaTime)
 				-Sz,
 				(float)GetWorld()->GetTimeSeconds(),
 				1.0f // TODO: Duration should eventually be constant. If it isn't, will need to make sure arc height is lower
-			}), true
+				}), true
 		);
 	}
-
-	//GEngine->AddOnScreenDebugMessage(0, 0.0f, FColor::Green, FString::Printf(TEXT("World Time: %.2f s"), GetWorld()->GetTimeSeconds()));
 }
-

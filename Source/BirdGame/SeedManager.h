@@ -25,6 +25,8 @@ public:
 
 	virtual void OnConstruction(const FTransform& Transform) override;
 
+	void ThrowSeeds(const int& SeedCount);
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
