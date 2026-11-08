@@ -29,4 +29,10 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera Settings")
 	bool bActivateOnStart;
+
+	UPROPERTY(EditAnywhere, Category = "UI")
+	TSubclassOf<class UUserWidget> HudWidgetReference;
+
+	UPROPERTY()
+	class UUserWidget* CreatedHudWidget;
 };

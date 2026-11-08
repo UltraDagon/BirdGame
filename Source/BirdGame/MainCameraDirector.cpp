@@ -5,6 +5,7 @@
 #include "Camera/CameraComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "GameFramework/PlayerController.h"
+#include "Blueprint/UserWidget.h"
 
 // Sets default values
 AMainCameraDirector::AMainCameraDirector()
@@ -23,6 +24,7 @@ void AMainCameraDirector::BeginPlay()
 {
 	Super::BeginPlay();
 	
+    // Set player's view to the camera
     if (bActivateOnStart)
     {
         APlayerController* PlayerController = UGameplayStatics::GetPlayerController(this, 0);
@@ -30,6 +32,16 @@ void AMainCameraDirector::BeginPlay()
         {
             PlayerController->SetViewTargetWithBlend(this, 0.0f);
         }
+    }
+
+    // Show HUD
+    if (IsValid(HudWidgetReference))
+    {
+        CreatedHudWidget = CreateWidget<UUserWidget>(GetWorld(), HudWidgetReference);
+    }
+    if (IsValid(CreatedHudWidget))
+    {
+        CreatedHudWidget->AddToViewport();
     }
 }
 
