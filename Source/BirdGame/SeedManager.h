@@ -25,7 +25,8 @@ public:
 
 	virtual void OnConstruction(const FTransform& Transform) override;
 
-	void ThrowSeeds(const int& SeedCount);
+	UFUNCTION(BlueprintCallable)
+	void ThrowSeeds();
 
 protected:
 	// Called when the game starts or when spawned

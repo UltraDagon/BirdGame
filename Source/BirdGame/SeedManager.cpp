@@ -75,14 +75,16 @@ void ASeedManager::Tick(float DeltaTime)
 	while (TimeSinceLastSpawn >= SpawnRate) {
 		TimeSinceLastSpawn -= SpawnRate;
 
-		ThrowSeeds(5);
+		ThrowSeeds();
 	}
 
 	//GEngine->AddOnScreenDebugMessage(0, 0.0f, FColor::Green, FString::Printf(TEXT("World Time: %.2f s"), GetWorld()->GetTimeSeconds()));
 }
 
-void ASeedManager::ThrowSeeds(const int& SeedCount)
+void ASeedManager::ThrowSeeds()
 {
+	const int SeedCount = 5; // Will later be a member variable
+
 	const float Sx = SpawnExtent.X;
 	const float Sy = SpawnExtent.Y;
 	const float Sz = SpawnExtent.Z;
